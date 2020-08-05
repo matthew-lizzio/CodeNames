@@ -10,24 +10,35 @@ namespace mml.CodeNames.Backend.DataAccessLibrary
 {
     public static class DataAccess
     {
-        public static IList<TileWords> TileWords { get; set; }
-        public static IList<Tiles> Gameboard { get; set; }
+        public static SQLite.SQLiteConnection SQLiteConnection { get; set; }
+        
+        public static IList<TileWords> TileWords { get; private set; }
+
+        public static IList<Tiles> Gameboard{ get; private set; }
+        public static void WriteGameboard()
+        {
+            // SQLiteConnection.DeleteAll<Tiles>();
+            foreach (var item in Gameboard)
+            {
+                SQLiteConnection.InsertOrReplace(item);
+            }            
+            SQLiteConnection.Commit();
+        }
+
         public static void InitializeDatabase()
         {
-            using (SQLite.SQLiteConnection conn = new SQLite.SQLiteConnection(Program.DatabasePath))
-            {
-                /// - Create tables                
-                conn.CreateTable<TileWords>();
-                conn.CreateTable<Tiles>();
+            SQLiteConnection = new SQLite.SQLiteConnection(Program.DatabasePath);
 
-                /// - Cleanup 
+            /// - Create tables                
+            SQLiteConnection.CreateTable<TileWords>();
+            SQLiteConnection.CreateTable<Tiles>();
 
-                /// - Populate class table attributes
-                TileWords = conn.Table<TileWords>().ToList();
-                Gameboard = conn.Table<Tiles>().ToList();
-                
-            }            
+            /// - Populate class table attributes
+            TileWords = SQLiteConnection.Table<TileWords>().ToList();
+            Gameboard = SQLiteConnection.Table<Tiles>().ToList();
+
+
         }
-        
+
     }
 }
