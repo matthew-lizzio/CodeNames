@@ -21,7 +21,7 @@ namespace mml.CodeNames.Backend.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<TileWords> Get()
+        public IEnumerable<TileWords> GetTileWords()
         {
             return DataAccess.TileWords;
         }
