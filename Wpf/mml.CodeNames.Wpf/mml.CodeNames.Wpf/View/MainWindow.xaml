@@ -12,22 +12,27 @@
     <Window.Resources>
         <vm:MainWindowVm x:Key="vm"/>
         <converters:TileTypeToColorConverter x:Key="tileTypeToColor"/>
-        <converters:TileTypeToFontColorConverter x:Key="tileTypeToFontColor"/>        
+        <converters:TileTypeToFontColorConverter x:Key="tileTypeToFontColor"/> 
     </Window.Resources>
-    <Grid DataContext="{StaticResource vm}">
+    <Grid DataContext="{StaticResource vm}" Background="{StaticResource DarkGrey}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <!--Row 0-->
-        <Menu Grid.Row="0" HorizontalAlignment="Left" Height="Auto" VerticalAlignment="Top" Width="Auto">
-            <MenuItem Header="_Menu">
-                <MenuItem x:Name="NewGame" Header="_New Game" HorizontalAlignment="Right" Width="Auto"
+        <Menu Grid.Row="0" HorizontalAlignment="Left" Height="Auto" VerticalAlignment="Top" Width="Auto" Background="{StaticResource DarkGrey}" Foreground="White">
+            <MenuItem Header="_Menu" Background="{StaticResource DarkGrey}" Foreground="White">
+                <MenuItem x:Name="NewGame" Header="_New Game" HorizontalAlignment="Right" Width="Auto" Background="{StaticResource DarkGrey}" Foreground="White"
                           Command="{Binding NewGameCommand}"
+                          CommandParameter="N/A">
+                </MenuItem>
+                <MenuItem x:Name="ManageDictionary" Header="_Manage Dictionary" HorizontalAlignment="Right" Width="Auto" Background="{StaticResource DarkGrey}" Foreground="White"
+                          Command="{Binding LaunchDictionaryManagerCommand}"
                           CommandParameter="N/A">
                 </MenuItem>
             </MenuItem>
         </Menu>
+        <TextBlock Margin="0,5,5,0" Grid.Row="0" Background="#555555" Foreground="White" HorizontalAlignment="Right" Height="Auto" VerticalAlignment="Top" Width="Auto" Text="{Binding WhoGoesFirstText}"></TextBlock>
         <!--Row 1-->
         <ItemsControl Grid.Row="1" DataContext="{Binding Source={StaticResource vm}}" 
                       ItemsSource="{Binding Path=Gameboard}">
@@ -44,7 +49,7 @@
                              Command="{Binding TileClickCommand, Source={StaticResource vm}}"
                              CommandParameter="{Binding Id}"
                              BorderThickness="10"
-                             BorderBrush="Black"></Button>
+                             BorderBrush="{StaticResource DarkGrey}"></Button>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

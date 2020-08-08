@@ -18,8 +18,7 @@ namespace mml.CodeNames.Wpf.ViewModel.Helper
         }
         public async Task<List<Tiles>> StartNewGame()
         {
-            var url = UrlConsts.GetNewGameUrl();
-            //string url = "http://localhost:5000/Gameboard/NewGame";
+            var url = UrlConsts.GetNewGameUrl();            
             var response = await HttpClient.GetAsync(url);
             string json = await response.Content.ReadAsStringAsync();
             var options = new JsonSerializerOptions
@@ -29,5 +28,16 @@ namespace mml.CodeNames.Wpf.ViewModel.Helper
             return JsonSerializer.Deserialize<List<Tiles>>(json, options);
         }
 
+        public async Task<List<TileWords>> RetrieveDictionary()
+        {
+            var url = UrlConsts.GetTileLibraryUrl();            
+            var response = await HttpClient.GetAsync(url);
+            string json = await response.Content.ReadAsStringAsync();
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+            };
+            return JsonSerializer.Deserialize<List<TileWords>>(json, options);
+        }
     }
 }

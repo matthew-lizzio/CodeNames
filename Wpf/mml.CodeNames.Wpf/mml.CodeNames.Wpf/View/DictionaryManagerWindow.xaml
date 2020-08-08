@@ -1,0 +1,54 @@
+﻿<Window x:Class="mml.CodeNames.Wpf.View.DictionaryManagerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:mml.CodeNames.Wpf.View" 
+        xmlns:vm="clr-namespace:mml.CodeNames.Wpf.ViewModel"
+        mc:Ignorable="d"
+        Title="Dictionary Manager" Height="350" Width="300">
+    <Window.Resources>
+        <vm:DictionaryManagerWindowVm x:Key="vm"/>
+    </Window.Resources>
+    <Grid DataContext="{StaticResource vm}" Background="{StaticResource DarkGrey}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.ColumnSpan="2" Grid.Row="0" Background="Transparent">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Foreground="White">New Word:</Label>
+            <TextBox Grid.Column="1" Text="{Binding NewWord.Word, Mode=TwoWay}" Background="{StaticResource DarkGrey}" Foreground="White"></TextBox>
+            <Button Grid.Column="2" HorizontalAlignment="Right" 
+                    Margin="5,0,0,0" Background="{StaticResource DarkGrey}" Command="{Binding AddWordCommand}" CommandParameter="N/A" Foreground="LawnGreen" FontWeight="UltraBold">+</Button>
+        </Grid>
+        <DataGrid Margin="15,0,0,0" ItemsSource="{Binding Dictionary}" Grid.ColumnSpan="2" Grid.Row="1" Background="{StaticResource DarkGrey}" Foreground="White" >
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Setter Property="Foreground" Value="White" />
+                    <Setter Property="Background" Value="{StaticResource DarkGrey}" />
+                </Style>
+            </DataGrid.RowStyle>
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="DataGridColumnHeader">
+                    <Setter Property="Foreground" Value="White" />
+                    <Setter Property="Background" Value="{StaticResource DarkGrey}" />
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
+        </DataGrid>
+        <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" >
+            <Button Margin="5,5,5,5" Command="{Binding UpdateDictionaryCommand}" CommandParameter="N/A">Save</Button>
+            <Button Margin="5,5,5,5">Cancel</Button>
+        </StackPanel>
+
+    </Grid>
+</Window>
